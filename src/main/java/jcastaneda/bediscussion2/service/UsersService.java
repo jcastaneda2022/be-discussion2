@@ -52,8 +52,8 @@ public class UsersService {
     }
 
     public List<UserDTO> getAllUsers() {
-        List<UserDTO> newList = new ArrayList<>();
         List<UsersEntity> oldList = usersRepository.findAll();
+        List<UserDTO> newList = new ArrayList<>();
 
         oldList.forEach(user -> {
             newList.add(modelMapper.map(user, UserDTO.class));
