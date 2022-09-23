@@ -24,4 +24,7 @@ public class UsersController {
     public List<UserDTO> getAllUsers() {
         return usersService.getAllUsers();
     }
+
+    @GetMapping("/{email}")
+    public UserDTO getUser(@PathVariable String email) { return usersService.getUser(email); }
 }

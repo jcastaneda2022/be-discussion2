@@ -61,4 +61,9 @@ public class UsersService {
 
         return newList;
     }
+
+    public UserDTO getUser(String email) {
+        UsersEntity user = usersRepository.findByEmail(email);
+        return modelMapper.map(user, UserDTO.class);
+    }
 }
