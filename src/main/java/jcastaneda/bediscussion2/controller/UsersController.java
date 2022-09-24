@@ -27,4 +27,10 @@ public class UsersController {
 
     @GetMapping("/{email}")
     public UserDTO getUser(@PathVariable String email) { return usersService.getUser(email); }
+
+    @PostMapping("/update")
+    public UserDTO updateUser(@RequestBody UserRequest userRequest) { return usersService.updateUser(userRequest); }
+
+    @DeleteMapping("/{email}")
+    public String deleteUser(@PathVariable String email) { return usersService.deleteUser(email); }
 }

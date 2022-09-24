@@ -66,4 +66,47 @@ public class UsersService {
         UsersEntity user = usersRepository.findByEmail(email);
         return modelMapper.map(user, UserDTO.class);
     }
+
+    public UserDTO updateUser(UserRequest userRequest) {
+
+        UsersEntity oldUser = usersRepository.findByEmail(userRequest.getEmail());
+
+        // Check if user exist
+        if(oldUser == null) throw new RuntimeException("User doesnt exist");
+
+        // Update user
+        UsersEntity updatedUser = UsersEntity.builder()
+                .userId(oldUser.getUserId())
+                .firstName(userRequest.getFirstName())
+                .lastName(userRequest.getLastName())
+                .password(userRequest.getPassword())
+                .email(oldUser.getEmail())
+                .mobileNumber(userRequest.getMobileNumber())
+                .totalOrders(0)
+                .successOrders(0)
+                .createdDate(oldUser.getCreatedDate())
+                .modifiedDate(dateTimeUtil.currentDate())
+                .build();
+
+
+        // save to database
+        usersRepository.save(updatedUser);
+
+
+        return modelMapper.map(updatedUser, UserDTO.class);
+    }
+
+    public String deleteUser(String email) {
+
+        String response = "No data has been deleted";
+        UsersEntity user = usersRepository.findByEmail(email);
+
+        // Check if email exist
+        if (user != null) {
+            usersRepository.deleteByEmail(user.getEmail());
+            response = email + " has been successfully deleted";
+        }
+
+        return response;
+    }
 }
